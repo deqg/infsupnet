@@ -21,7 +21,7 @@ default_dict = dict(
     device='cpu',
     batch_size=1024,
     folder = './result',
-    optim = 'rmsprop',
+    optim = 'adam',
     lr=2e-4,
     run='',
     fullbatch=True
@@ -71,8 +71,8 @@ if __name__ == "__main__":
     unet = unet.to(args['device'])
     vnet = vnet.to(args['device'])
     if args['optim'] == 'adam':
-        uop = torch.optim.Adam(unet.parameters(), lr=args['lr'])
-        vop = torch.optim.Adam(vnet.parameters(), lr=args['lr'])
+        uop = torch.optim.Adam(unet.parameters(), lr=args['lr'],betas=(0.5, 0.999))
+        vop = torch.optim.Adam(vnet.parameters(), lr=args['lr'],betas=(0.5, 0.999))
     elif args['optim'] == 'rmsprop':
         uop = torch.optim.RMSprop(unet.parameters(), lr=args['lr'])
         vop = torch.optim.RMSprop(vnet.parameters(), lr=args['lr'])
